@@ -1,14 +1,40 @@
 import { Component } from 'react'
-import Button from './components/Button'
+import Person from './components/Person/Person'
 
 class App extends Component {
-  // JavaScript
-  onClickHandler = () => {
-    console.log('Button was clicked!')
+  // State --> A way to create & manage your own data within the component
+  // State are nothing but a normal JS Object
+  state = {
+    persons: [
+      {name: 'Johnathan', age: 25},
+      {name: 'Max', age: 23},
+      {name: 'Daniel', age: 29},
+      {name: 'Ted', age: 24}
+    ]
   }
 
-  onParagraphClick = () => {
-    console.log('Paragraph was clicked!')
+  onChangeHandler = () => {
+    // DONOT DO THIS --> Donot mutate/ update/ change the state values directly
+    // this.state.persons[0].name = 'John'
+    this.setState({
+      persons: [
+        {name: 'John', age: 25},
+        {name: 'Maxillian', age: 23},
+        {name: 'Daniel', age: 29},
+        {name: 'Teddy', age: 24}
+      ]
+    })
+  }
+
+  onNameChangedHandler = (eventParam) => {
+    this.setState({
+      persons: [
+        {name: 'John', age: 25},
+        {name: eventParam.target.value, age: 23},
+        {name: 'Daniel', age: 29},
+        {name: 'Teddy', age: 24}
+      ]
+    })
   }
 
   render() {
@@ -16,10 +42,14 @@ class App extends Component {
     return (
       <div className="container">
         <h1 onClick={this.onParagraphClick}>Hello... Welcome to React!</h1> <hr />
-        <Button text='My Button' clicked={this.onClickHandler}  />
-        <Button contextualClass='btn btn-danger' clicked={this.onClickHandler}  />
-        <Button contextualClass='btn btn-info' clicked={this.onClickHandler}  />
-        <Button clicked={this.onClickHandler} />
+        <Person name={this.state.persons[0].name} age={this.state.persons[0].age} />
+        <Person name={this.state.persons[1].name} age={this.state.persons[1].age} changed={ (event) => {this.onNameChangedHandler(event)} } />
+        <Person name={this.state.persons[2].name} age={this.state.persons[2].age} />
+        <Person name={this.state.persons[3].name} age={this.state.persons[3].age} />
+
+        <hr />
+
+        <button onClick={this.onChangeHandler} className='btn btn-danger'>Change Person</button>
       </div>
     )
   }
