@@ -9,8 +9,10 @@ class App extends Component {
       {name: 'Johnathan', age: 25},
       {name: 'Max', age: 23},
       {name: 'Daniel', age: 29},
-      {name: 'Ted', age: 24}
-    ]
+      {name: 'Ted', age: 24},
+      {name: 'John', age: 29}
+    ],
+    showPersons: false
   }
 
   onChangeHandler = () => {
@@ -26,6 +28,11 @@ class App extends Component {
     })
   }
 
+  togglePersonHandler = () => {
+    let doesShow = this.state.showPersons
+    this.setState({showPersons: !doesShow})
+  }
+
   onNameChangedHandler = (eventParam) => {
     this.setState({
       persons: [
@@ -38,18 +45,36 @@ class App extends Component {
   }
 
   render() {
-    // JSX
+    // JavaScript
+
+    // CONDITIONAL RENDERING
+    let myPersons = ( <div>Please click Toggle Persons button to view!</div> )
+    // let myPersons = null
+    if (this.state.showPersons) {
+      myPersons = (
+        <div>
+          {
+            this.state.persons.map( (person, index) => <Person key={index} name={person.name} age={person.age} /> )
+          }
+          <hr />
+          <button onClick={this.onChangeHandler} className='btn btn-success'>Change Person</button>
+        </div>
+      )
+    }
+    
     return (
-      <div className="container">
-        <h1 onClick={this.onParagraphClick}>Hello... Welcome to React!</h1> <hr />
-        <Person name={this.state.persons[0].name} age={this.state.persons[0].age} />
-        <Person name={this.state.persons[1].name} age={this.state.persons[1].age} changed={ (event) => {this.onNameChangedHandler(event)} } />
-        <Person name={this.state.persons[2].name} age={this.state.persons[2].age} />
-        <Person name={this.state.persons[3].name} age={this.state.persons[3].age} />
+      // JSX
+      // In JSX if you want to write JS -- in { ... }
+      <div>
+        <div className="container-fluid">
+          <h1 onClick={this.onParagraphClick}>Hello... Welcome to React!</h1> <br /> <br />
+          <button onClick={this.togglePersonHandler} className='btn btn-info'>Toggle Persons</button>
+          <hr />
+        </div>
 
-        <hr />
-
-        <button onClick={this.onChangeHandler} className='btn btn-danger'>Change Person</button>
+        <div className="container">
+          { myPersons }
+        </div>
       </div>
     )
   }
