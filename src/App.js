@@ -6,11 +6,11 @@ class App extends Component {
   // State are nothing but a normal JS Object
   state = {
     persons: [
-      {name: 'Johnathan', age: 25},
-      {name: 'Max', age: 23},
-      {name: 'Daniel', age: 29},
-      {name: 'Ted', age: 24},
-      {name: 'John', age: 29}
+      {id: 'person-one', name: 'Johnathan', age: 25},
+      {id: 'person-two', name: 'Max', age: 23},
+      {id: 'person-three', name: 'Daniel', age: 29},
+      {id: 'person-four', name: 'Ted', age: 24},
+      {id: 'person-five', name: 'John', age: 29}
     ],
     showPersons: false
   }
@@ -44,6 +44,12 @@ class App extends Component {
     })
   }
 
+  deletePersonHandler = (personId) => {
+    const personsCopy = [...this.state.persons]
+    personsCopy.splice(personId, 1)
+    this.setState({persons: personsCopy})
+  }
+
   render() {
     // JavaScript
 
@@ -54,7 +60,7 @@ class App extends Component {
       myPersons = (
         <div>
           {
-            this.state.persons.map( (person, index) => <Person key={index} name={person.name} age={person.age} /> )
+            this.state.persons.map( (person, index) => <Person key={person.id} name={person.name} age={person.age} deleted={() => this.deletePersonHandler(person.id)} /> )
           }
           <hr />
           <button onClick={this.onChangeHandler} className='btn btn-success'>Change Person</button>
