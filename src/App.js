@@ -2,17 +2,32 @@ import { Component } from 'react'
 import Person from './components/Person/Person'
 
 class App extends Component {
-  // State --> A way to create & manage your own data within the component
-  // State are nothing but a normal JS Object
-  state = {
-    persons: [
-      {id: 'person-one', name: 'Johnathan', age: 25},
-      {id: 'person-two', name: 'Max', age: 23},
-      {id: 'person-three', name: 'Daniel', age: 29},
-      {id: 'person-four', name: 'Ted', age: 24},
-      {id: 'person-five', name: 'John', age: 29}
-    ],
-    showPersons: false
+  constructor(props) {
+    console.log(`[App.js] constructor`)
+    super(props)
+    // State --> A way to create & manage your own data within the component
+    // State are nothing but a normal JS Object
+    this.state = {
+      persons: [
+        {id: 'person-one', name: 'Johnathan', age: 25},
+        {id: 'person-two', name: 'Max', age: 23},
+        {id: 'person-three', name: 'Daniel', age: 29},
+        {id: 'person-four', name: 'Ted', age: 24},
+        {id: 'person-five', name: 'John', age: 29}
+      ],
+      showPersons: false
+    }
+  }
+
+  static getDerivedStateFromProps = (props, state) => {
+    console.log(`[App.js] getDerivedStateFromProps`)
+    console.log(`[App.js] getDerivedStateFromProps -- Props --> `, props)
+    console.log(`[App.js] getDerivedStateFromProps -- State --> `, state)
+    return state
+  }
+
+  componentDidMount = () => {
+    console.log(`[App.js] componentDidMount`)
   }
 
   onChangeHandler = () => {
@@ -52,7 +67,7 @@ class App extends Component {
 
   render() {
     // JavaScript
-
+    console.log(`[App.js] render`)
     // CONDITIONAL RENDERING
     let myPersons = ( <div>Please click Toggle Persons button to view!</div> )
     // let myPersons = null
@@ -73,7 +88,7 @@ class App extends Component {
       // In JSX if you want to write JS -- in { ... }
       <div>
         <div className="container-fluid">
-          <h1 onClick={this.onParagraphClick}>Hello... Welcome to React!</h1> <br /> <br />
+          <h1 onClick={this.onParagraphClick}> {this.props.appTitle} </h1> <br /> <br />
           <button onClick={this.togglePersonHandler} className='btn btn-info'>Toggle Persons</button>
           <hr />
         </div>

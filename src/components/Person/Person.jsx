@@ -2,10 +2,12 @@ import './Person.css'
 import { useState } from 'react'
 
 const Person = (props) => {
-    const [ personState, setPersonState ] = useState( {
-        samplePersonState: 'This is a initial Person State',
-        isActuallyState: false
-    } )
+    console.log(`[Person.js] rendering...`)
+
+    const [ personStateOne, setPersonStateOne ] = useState('This is a initial Person State')
+    // const [personStateTwo, setPersonStateTwo] = useState(true)
+
+    // Create as many useState as you want / require in the component
 
     const divStyles = {
         border: '2px solid gray', 
@@ -14,16 +16,13 @@ const Person = (props) => {
     }
 
     const changePersonStateHandler = () => {
-        setPersonState({
-            samplePersonState: 'This is a new Person State',
-            isActuallyState: true
-        })
+        setPersonStateOne('This is a new Person State')
     }
 
     return (
         <div style={ divStyles } className="container">
             <div style={ {display: 'flex', justifyContent: 'space-between'} }>
-                <h5>The state in Person compoennt is {personState.samplePersonState} </h5>
+                <h5>The state in Person compoennt is {personStateOne} </h5>
                 <button onClick={changePersonStateHandler} className='bt btn-warning'>Change Person State</button>
             </div>
 
